@@ -28,7 +28,6 @@
             width: 100vw;
             height: 100vh;
             z-index: 0;
-            pointer-events: none;
         }
 
         nav {
@@ -457,51 +456,76 @@
     </footer>
 
     <script>
-        // Mouse interaction with particles
+        // Mouse interaction
         let mouse = { x: null, y: null, radius: 150 };
         
-        // Particle animation
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         
-        // Set canvas size
         canvas.width = window.innerWidth;
         canvas.height = document.documentElement.scrollHeight;
 
         let particles = [];
-        const particleCount = 200;
-        const connectionDistance = 150;
+        const particleCount = 80;
 
         class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = 0;
-                this.vy = 0;
-                this.radius = Math.random() * 2.5 + 1.5;
+            constructor(x, y, size = null) {
+                this.x = x || Math.random() * canvas.width;
+                this.y = y || Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = (Math.random() - 0.5) * 1.5;
+                this.radius = size || (Math.random() * 4 + 3);
+                this.life = 1;
+                this.maxLife = 1;
+                this.fadeOut = false;
             }
 
             update() {
-                // Damping to slow down movement
-                this.vx *= 0.95;
-                this.vy *= 0.95;
-                
                 this.x += this.vx;
                 this.y += this.vy;
 
-                // Keep in bounds
-                if (this.x < 0 || this.x > canvas.width) this.vx = 0;
-                if (this.y < 0 || this.y > canvas.height) this.vy = 0;
+                // Wrap around edges
+                if (this.x < -10) this.x = canvas.width + 10;
+                if (this.x > canvas.width + 10) this.x = -10;
+                if (this.y < -10) this.y = canvas.height + 10;
+                if (this.y > canvas.height + 10) this.y = -10;
+
+                // Fade out if marked
+                if (this.fadeOut) {
+                    this.life -= 0.02;
+                }
             }
 
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = '#5999c7';
-                ctx.shadowBlur = 15;
+                ctx.fillStyle = `rgba(89, 153, 199, ${this.life})`;
+                ctx.shadowBlur = 20 * this.life;
                 ctx.shadowColor = '#5999c7';
                 ctx.fill();
                 ctx.shadowBlur = 0;
+            }
+
+            isClicked(mx, my) {
+                const dx = mx - this.x;
+                const dy = my - this.y;
+                return Math.sqrt(dx * dx + dy * dy) < this.radius + 5;
+            }
+
+            burst() {
+                const burstParticles = [];
+                const numBurst = Math.floor(Math.random() * 5) + 8; // 8-12 new particles
+                
+                for (let i = 0; i < numBurst; i++) {
+                    const angle = (Math.PI * 2 * i) / numBurst + Math.random() * 0.5;
+                    const speed = Math.random() * 3 + 2;
+                    const newParticle = new Particle(this.x, this.y, this.radius * 0.6);
+                    newParticle.vx = Math.cos(angle) * speed;
+                    newParticle.vy = Math.sin(angle) * speed;
+                    burstParticles.push(newParticle);
+                }
+                
+                return burstParticles;
             }
         }
 
@@ -509,81 +533,57 @@
             particles.push(new Particle());
         }
 
-        function connectParticles() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < connectionDistance) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(89, 153, 199, ${1 - distance / connectionDistance})`;
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            // Connect to mouse
-            if (mouse.x && mouse.y) {
-                particles.forEach(particle => {
-                    const dx = mouse.x - particle.x;
-                    const dy = mouse.y - particle.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < mouse.radius) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(89, 153, 199, ${1 - distance / mouse.radius})`;
-                        ctx.lineWidth = 2;
-                        ctx.moveTo(particle.x, particle.y);
-                        ctx.lineTo(mouse.x, mouse.y);
-                        ctx.stroke();
-
-                        // Gently push particles away from mouse
-                        const force = (mouse.radius - distance) / mouse.radius;
-                        const angle = Math.atan2(dy, dx);
-                        particle.vx -= Math.cos(angle) * force * 0.03;
-                        particle.vy -= Math.sin(angle) * force * 0.03;
-                    }
-                });
-
-                // Draw mouse point
-                ctx.beginPath();
-                ctx.arc(mouse.x, mouse.y, 5, 0, Math.PI * 2);
-                ctx.fillStyle = '#5999c7';
-                ctx.shadowBlur = 20;
-                ctx.shadowColor = '#5999c7';
-                ctx.fill();
-            }
-        }
-
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            particles.forEach(particle => {
-                particle.update();
-                particle.draw();
-            });
+            // Update and draw particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                
+                // Remove faded particles
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
 
-            connectParticles();
             requestAnimationFrame(animate);
         }
 
         animate();
 
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
         window.addEventListener('resize', resizeCanvas);
 
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.x;
-            mouse.y = e.y;
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
         });
 
-        window.addEventListener('mouseout', () => {
+        canvas.addEventListener('mouseout', () => {
             mouse.x = null;
             mouse.y = null;
+        });
+
+        // Click to burst dots
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX;
+            const clickY = e.clientY;
+            
+            for (let i = particles.length - 1; i >= 0; i--) {
+                if (particles[i].isClicked(clickX, clickY)) {
+                    const burstParticles = particles[i].burst();
+                    particles[i].fadeOut = true;
+                    particles.push(...burstParticles);
+                    break; // Only burst one dot per click
+                }
+            }
         });
     </script>
 </body>
