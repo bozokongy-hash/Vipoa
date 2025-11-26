@@ -165,20 +165,6 @@
             position: relative;
         }
 
-        .hero h1::before {
-            content: 'VIPOA';
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: linear-gradient(45deg, #5999c7, #7bb3db, #9dd4f5);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: blur(20px);
-            opacity: 0.5;
-            animation: gradientShift 4s ease infinite;
-        }
-
         @keyframes gradientShift {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -682,10 +668,13 @@
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            canvas.height = document.documentElement.scrollHeight;
         }
 
         window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('scroll', () => {
+            canvas.height = document.documentElement.scrollHeight;
+        });
 
         canvas.addEventListener('mousemove', (e) => {
             const rect = canvas.getBoundingClientRect();
