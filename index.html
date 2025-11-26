@@ -18,27 +18,27 @@
             line-height: 1.6;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            min-height: 100vh;
         }
 
-        .bg-grid {
+        canvas {
             position: fixed;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(89, 153, 199, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(89, 153, 199, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
         }
 
         nav {
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.8);
             padding: 1.5rem 2rem;
             position: sticky;
             top: 0;
             z-index: 100;
             border-bottom: 2px solid #5999c7;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
         }
 
         .nav-container {
@@ -53,8 +53,14 @@
             font-size: 2rem;
             font-weight: 900;
             color: #5999c7;
-            text-shadow: 0 0 20px rgba(89, 153, 199, 0.5);
+            text-shadow: 0 0 30px rgba(89, 153, 199, 0.8);
             letter-spacing: 3px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { text-shadow: 0 0 20px rgba(89, 153, 199, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(89, 153, 199, 1); }
         }
 
         .nav-links {
@@ -79,6 +85,7 @@
             height: 2px;
             background: #5999c7;
             transition: width 0.3s;
+            box-shadow: 0 0 10px #5999c7;
         }
 
         .nav-links a:hover:after {
@@ -87,36 +94,48 @@
 
         .nav-links a:hover {
             color: #5999c7;
+            text-shadow: 0 0 20px rgba(89, 153, 199, 0.8);
         }
 
         .hero {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 8rem 2rem;
+            padding: 10rem 2rem;
             text-align: center;
             position: relative;
+            z-index: 1;
         }
 
         .hero h1 {
-            font-size: 6rem;
+            font-size: 7rem;
             margin-bottom: 1rem;
             font-weight: 900;
-            color: #5999c7;
-            text-shadow: 0 0 40px rgba(89, 153, 199, 0.8);
-            letter-spacing: 5px;
-            animation: glow 2s ease-in-out infinite alternate;
+            background: linear-gradient(45deg, #5999c7, #7bb3db, #5999c7);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 8px;
+            animation: gradientShift 3s ease infinite, float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(89, 153, 199, 0.8));
         }
 
-        @keyframes glow {
-            from { text-shadow: 0 0 20px rgba(89, 153, 199, 0.5), 0 0 40px rgba(89, 153, 199, 0.3); }
-            to { text-shadow: 0 0 40px rgba(89, 153, 199, 0.8), 0 0 80px rgba(89, 153, 199, 0.5); }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
         }
 
         .hero p {
-            font-size: 1.5rem;
-            color: #ccc;
+            font-size: 1.3rem;
+            color: #5999c7;
             margin-bottom: 3rem;
             font-weight: bold;
+            opacity: 0.9;
+            text-shadow: 0 0 10px rgba(89, 153, 199, 0.5);
         }
 
         .cta-buttons {
@@ -132,41 +151,65 @@
             border: none;
             cursor: pointer;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: all 0.4s;
             display: inline-block;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover:before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn-primary {
             background: #5999c7;
             color: #000;
-            box-shadow: 0 0 30px rgba(89, 153, 199, 0.5);
+            box-shadow: 0 0 40px rgba(89, 153, 199, 0.6);
         }
 
         .btn-primary:hover {
             background: #6aabdb;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 40px rgba(89, 153, 199, 0.8);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(89, 153, 199, 1);
         }
 
         .btn-secondary {
             background: transparent;
             color: #5999c7;
             border: 3px solid #5999c7;
+            box-shadow: 0 0 20px rgba(89, 153, 199, 0.3);
         }
 
         .btn-secondary:hover {
             background: #5999c7;
             color: #000;
-            box-shadow: 0 0 30px rgba(89, 153, 199, 0.5);
+            box-shadow: 0 0 40px rgba(89, 153, 199, 0.8);
+            transform: translateY(-5px) scale(1.05);
         }
 
         .features {
             max-width: 1400px;
             margin: 6rem auto;
             padding: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
         .features h2 {
@@ -177,6 +220,7 @@
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(89, 153, 199, 0.6);
         }
 
         .features-grid {
@@ -186,34 +230,32 @@
         }
 
         .feature-card {
-            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+            background: rgba(10, 10, 10, 0.8);
             padding: 2.5rem;
             border: 2px solid #5999c7;
-            transition: all 0.3s;
+            transition: all 0.4s;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
 
         .feature-card:before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(89, 153, 199, 0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s;
-        }
-
-        .feature-card:hover:before {
-            left: 100%;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #5999c7, transparent, #5999c7);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s;
         }
 
         .feature-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(89, 153, 199, 0.5);
             border-color: #6aabdb;
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(89, 153, 199, 0.3);
         }
 
         .feature-card h3 {
@@ -221,12 +263,16 @@
             margin-bottom: 1rem;
             color: #5999c7;
             font-weight: 900;
+            position: relative;
+            z-index: 1;
         }
 
         .feature-card p {
             color: #aaa;
             font-weight: bold;
             line-height: 1.8;
+            position: relative;
+            z-index: 1;
         }
 
         .stats {
@@ -234,9 +280,23 @@
             margin: 6rem auto;
             padding: 5rem 2rem;
             text-align: center;
-            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+            background: rgba(10, 10, 10, 0.8);
             border: 3px solid #5999c7;
-            box-shadow: 0 0 50px rgba(89, 153, 199, 0.3);
+            box-shadow: 0 0 60px rgba(89, 153, 199, 0.4);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .stats:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(89, 153, 199, 0.05), transparent);
         }
 
         .stats h2 {
@@ -246,12 +306,25 @@
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(89, 153, 199, 0.6);
+            position: relative;
+            z-index: 1;
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item {
+            transition: transform 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: scale(1.1);
         }
 
         .stat-item h3 {
@@ -259,7 +332,13 @@
             margin-bottom: 0.5rem;
             color: #5999c7;
             font-weight: 900;
-            text-shadow: 0 0 20px rgba(89, 153, 199, 0.5);
+            text-shadow: 0 0 30px rgba(89, 153, 199, 0.8);
+            animation: countGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes countGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(89, 153, 199, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(89, 153, 199, 1); }
         }
 
         .stat-item p {
@@ -271,11 +350,14 @@
         }
 
         footer {
-            background: #000;
+            background: rgba(0, 0, 0, 0.9);
             padding: 3rem;
             text-align: center;
             margin-top: 6rem;
             border-top: 3px solid #5999c7;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
         }
 
         footer p {
@@ -286,7 +368,7 @@
 
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 3rem;
+                font-size: 3.5rem;
             }
 
             .nav-links {
@@ -300,7 +382,7 @@
     </style>
 </head>
 <body>
-    <div class="bg-grid"></div>
+    <canvas id="particles"></canvas>
 
     <nav>
         <div class="nav-container">
@@ -373,5 +455,136 @@
     <footer>
         <p>&copy; 2025 VIPOA. ALL RIGHTS RESERVED.</p>
     </footer>
+
+    <script>
+        // Mouse interaction with particles
+        let mouse = { x: null, y: null, radius: 150 };
+        
+        // Particle animation
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        canvas.width = window.innerWidth;
+        canvas.height = document.documentElement.scrollHeight;
+
+        let particles = [];
+        const particleCount = 200;
+        const connectionDistance = 150;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = 0;
+                this.vy = 0;
+                this.radius = Math.random() * 2.5 + 1.5;
+            }
+
+            update() {
+                // Damping to slow down movement
+                this.vx *= 0.95;
+                this.vy *= 0.95;
+                
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Keep in bounds
+                if (this.x < 0 || this.x > canvas.width) this.vx = 0;
+                if (this.y < 0 || this.y > canvas.height) this.vy = 0;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = '#5999c7';
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = '#5999c7';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < connectionDistance) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(89, 153, 199, ${1 - distance / connectionDistance})`;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Connect to mouse
+            if (mouse.x && mouse.y) {
+                particles.forEach(particle => {
+                    const dx = mouse.x - particle.x;
+                    const dy = mouse.y - particle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < mouse.radius) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(89, 153, 199, ${1 - distance / mouse.radius})`;
+                        ctx.lineWidth = 2;
+                        ctx.moveTo(particle.x, particle.y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.stroke();
+
+                        // Gently push particles away from mouse
+                        const force = (mouse.radius - distance) / mouse.radius;
+                        const angle = Math.atan2(dy, dx);
+                        particle.vx -= Math.cos(angle) * force * 0.03;
+                        particle.vy -= Math.sin(angle) * force * 0.03;
+                    }
+                });
+
+                // Draw mouse point
+                ctx.beginPath();
+                ctx.arc(mouse.x, mouse.y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = '#5999c7';
+                ctx.shadowBlur = 20;
+                ctx.shadowColor = '#5999c7';
+                ctx.fill();
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            connectParticles();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        window.addEventListener('resize', resizeCanvas);
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+
+        window.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+    </script>
 </body>
 </html>
