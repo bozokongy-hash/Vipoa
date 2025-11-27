@@ -18,8 +18,6 @@
             line-height: 1.6;
         }
 
-
-
         .hero-buttons {
             display: flex;
             gap: 1rem;
@@ -91,10 +89,12 @@
 
         /* Download Card */
         .download-card {
-            background: #151515;
-            border: 1px solid #222;
+            background: rgba(21, 21, 21, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 2.5rem;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         .version-header {
@@ -149,18 +149,20 @@
         }
 
         .feature-box {
-            background: #1a1a1a;
-            border: 1px solid #252525;
+            background: rgba(26, 26, 26, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 1.5rem;
             text-align: center;
             transition: all 0.3s;
+            backdrop-filter: blur(10px);
         }
 
         .feature-box:hover {
-            background: #202020;
-            border-color: #333;
+            background: rgba(32, 32, 32, 0.5);
+            border-color: rgba(89, 153, 199, 0.3);
             transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(89, 153, 199, 0.2);
         }
 
         .feature-icon {
@@ -215,11 +217,13 @@
 
         /* Updates Panel */
         .updates-panel {
-            background: #151515;
-            border: 1px solid #222;
+            background: rgba(21, 21, 21, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 2rem;
             height: fit-content;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         .updates-header {
@@ -285,19 +289,127 @@
         }
 
         .update-item {
-            background: #1a1a1a;
-            border: 1px solid #252525;
+            background: rgba(26, 26, 26, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
             padding: 1rem;
             font-size: 0.9rem;
             color: #bbb;
             line-height: 1.6;
             transition: all 0.2s;
+            backdrop-filter: blur(10px);
         }
 
         .update-item:hover {
-            background: #202020;
-            border-color: #333;
+            background: rgba(32, 32, 32, 0.5);
+            border-color: rgba(89, 153, 199, 0.2);
+            transform: translateX(4px);
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            max-width: 1200px;
+            margin: 4rem auto 2rem;
+            padding: 0 2rem 4rem;
+        }
+
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .reviews-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .reviews-header p {
+            font-size: 1.1rem;
+            color: #999;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .review-card {
+            background: rgba(21, 21, 21, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.75rem;
+            transition: all 0.3s;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .review-card:hover {
+            background: rgba(32, 32, 32, 0.5);
+            border-color: rgba(89, 153, 199, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(89, 153, 199, 0.15);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #5999c7 0%, #4a8ab5 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .review-info {
+            flex: 1;
+        }
+
+        .review-name {
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .review-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(89, 153, 199, 0.15);
+            color: #5999c7;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .review-rating {
+            background: rgba(89, 153, 199, 0.15);
+            color: #5999c7;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .review-text {
+            color: #ccc;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
         @media (max-width: 1024px) {
@@ -308,6 +420,10 @@
             .updates-panel {
                 order: -1;
             }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -317,6 +433,13 @@
 
             .features-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+                margin: 2rem auto 0;
             }
         }
     </style>
@@ -363,12 +486,12 @@
                 <div class="feature-box">
                     <div class="feature-icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="16 18 22 12 16 6"></polyline>
-                            <polyline points="8 6 2 12 8 18"></polyline>
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 6v6l4 2"></path>
                         </svg>
                     </div>
-                    <h3>Multi Attach</h3>
-                    <p>Attach to multiple clients simultaneously</p>
+                    <h3>Fast Execution</h3>
+                    <p>Lightning-fast script injection</p>
                 </div>
                 <div class="feature-box">
                     <div class="feature-icon">
@@ -421,6 +544,158 @@
             </div>
         </div>
     </div>
+
+    <section class="reviews-section">
+        <div class="reviews-header">
+            <h2>User Reviews</h2>
+            <p>See what our community has to say</p>
+        </div>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">D</div>
+                    <div class="review-info">
+                        <div class="review-name">
+                            dxrk
+                            <span class="review-badge">VERIFIED</span>
+                        </div>
+                    </div>
+                    <div class="review-rating">10/10</div>
+                </div>
+                <div class="review-text">
+                    the executor is better than xeno in my opinion runs alot more scripts
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">M</div>
+                    <div class="review-info">
+                        <div class="review-name">
+                            mikey
+                            <span class="review-badge">VERIFIED</span>
+                        </div>
+                    </div>
+                    <div class="review-rating">10/10</div>
+                </div>
+                <div class="review-text">
+                    very clean ui and runs smooth. recommend to anyone
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">N</div>
+                    <div class="review-info">
+                        <div class="review-name">
+                            nooedeku
+                            <span class="review-badge">VERIFIED</span>
+                        </div>
+                    </div>
+                    <div class="review-rating">10/10</div>
+                </div>
+                <div class="review-text">
+                    this executor is without a doubt WAY BETTER than xeno, probably the best (LIMITED) free executor!!
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">X</div>
+                    <div class="review-info">
+                        <div class="review-name">
+                            xeno
+                            <span class="review-badge">VERIFIED</span>
+                        </div>
+                    </div>
+                    <div class="review-rating">10/10</div>
+                </div>
+                <div class="review-text">
+                    very sexy ui might nut just looking at it
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">Z</div>
+                    <div class="review-info">
+                        <div class="review-name">
+                            zennot
+                            <span class="review-badge">VERIFIED</span>
+                        </div>
+                    </div>
+                    <div class="review-rating">10/10</div>
+                </div>
+                <div class="review-text">
+                    w 10/10
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">S</div>
+                    <div class="review-info">
+                        <div class="review-name">
+                            slamlol
+                            <span class="review-badge">VERIFIED</span>
+                        </div>
+                    </div>
+                    <div class="review-rating">10/10</div>
+                </div>
+                <div class="review-text">
+                    W 10/10 BETTER THAN SOLARA AND ZENO DEF WILL BUY LIFETIME
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">T</div>
+                    <div class="review-info">
+                        <div class="review-name">
+                            TayW
+                            <span class="review-badge">VERIFIED</span>
+                        </div>
+                    </div>
+                    <div class="review-rating">10/10</div>
+                </div>
+                <div class="review-text">
+                    W executor
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">Y</div>
+                    <div class="review-info">
+                        <div class="review-name">
+                            ys2l
+                            <span class="review-badge">VERIFIED</span>
+                        </div>
+                    </div>
+                    <div class="review-rating">10/10</div>
+                </div>
+                <div class="review-text">
+                    actually works unlike xeno
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">R</div>
+                    <div class="review-info">
+                        <div class="review-name">
+                            r
+                            <span class="review-badge">VERIFIED</span>
+                        </div>
+                    </div>
+                    <div class="review-rating">10/10</div>
+                </div>
+                <div class="review-text">
+                    10/10 obv
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script>
         // Smooth scroll for navigation links
