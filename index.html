@@ -11,1060 +11,697 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #5999c7;
-            --primary-light: #7bb3db;
-            --primary-dark: #4080a8;
-            --accent: #00f0ff;
-            --bg-dark: #0a0e1a;
-            --bg-darker: #050810;
-            --text-light: #ffffff;
-            --text-muted: #8a9ba8;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
-            background: #000000;
-            color: var(--text-light);
-            overflow-x: hidden;
+            font-family: 'Arial Black', 'Arial Bold', sans-serif;
+            background: radial-gradient(ellipse at top, #0a1628, #000000 50%);
+            color: #fff;
             line-height: 1.6;
-            cursor: default;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            min-height: 100vh;
         }
 
-        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 30%, rgba(89, 153, 199, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(89, 153, 199, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
         canvas {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             z-index: 0;
-            will-change: transform;
         }
 
-        .noise-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.03;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* Navigation */
         nav {
-            position: fixed;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1.5rem 2rem;
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(5, 8, 16, 0.6);
-            backdrop-filter: blur(20px) saturate(180%);
-            border-bottom: 1px solid rgba(89, 153, 199, 0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        nav.scrolled {
-            background: rgba(5, 8, 16, 0.95);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            border-bottom: 1px solid rgba(89, 153, 199, 0.2);
+            z-index: 100;
+            border-bottom: 2px solid rgba(89, 153, 199, 0.3);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(89, 153, 199, 0.1);
         }
 
         .nav-container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 1.5rem 3rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            position: relative;
-            padding: 0.5rem 0;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
-            box-shadow: 0 0 10px var(--primary);
-        }
-
-        .nav-links a:hover {
-            color: var(--text-light);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            overflow: hidden;
-        }
-
-        .hero-content {
             max-width: 1400px;
-            width: 100%;
-            position: relative;
-            z-index: 10;
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6rem;
-            align-items: center;
-        }
-
-        .hero-text {
-            animation: slideInLeft 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1.5rem;
-            background: rgba(89, 153, 199, 0.05);
-            border: 1px solid rgba(89, 153, 199, 0.2);
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--primary-light);
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-        }
-
-        .hero-badge::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: pulse 2s ease infinite;
-            box-shadow: 0 0 10px var(--accent);
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .hero h1 {
-            font-size: clamp(3.5rem, 8vw, 6rem);
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            color: var(--text-light);
-            letter-spacing: -3px;
-            line-height: 1;
-            position: relative;
-        }
-
-        .hero h1 .highlight {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            position: relative;
-        }
-
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 3rem;
-            font-weight: 400;
-            line-height: 1.8;
-            max-width: 600px;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1.2rem 3rem;
-            font-size: 0.95rem;
-            font-weight: 700;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 1px;
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            box-shadow: 0 10px 40px rgba(89, 153, 199, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 60px rgba(89, 153, 199, 0.5);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(89, 153, 199, 0.1);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(89, 153, 199, 0.3);
-        }
-
-        /* Hero Visual */
-        .hero-visual {
-            position: relative;
-            animation: slideInRight 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .terminal-window {
-            background: rgba(10, 14, 26, 0.8);
-            border: 1px solid rgba(89, 153, 199, 0.2);
-            border-radius: 12px;
-            padding: 1.5rem;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .terminal-window::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 40px;
-            background: rgba(89, 153, 199, 0.05);
-            border-bottom: 1px solid rgba(89, 153, 199, 0.1);
-        }
-
-        .terminal-dots {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            display: flex;
-            gap: 8px;
-            z-index: 1;
-        }
-
-        .terminal-dots span {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(89, 153, 199, 0.3);
-        }
-
-        .terminal-content {
-            margin-top: 40px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            line-height: 2;
-        }
-
-        .terminal-line {
-            opacity: 0;
-            animation: typeLine 0.5s ease forwards;
-        }
-
-        .terminal-line:nth-child(1) { animation-delay: 0.5s; }
-        .terminal-line:nth-child(2) { animation-delay: 1s; }
-        .terminal-line:nth-child(3) { animation-delay: 1.5s; }
-        .terminal-line:nth-child(4) { animation-delay: 2s; }
-        .terminal-line:nth-child(5) { animation-delay: 2.5s; }
-
-        @keyframes typeLine {
-            to { opacity: 1; }
-        }
-
-        .terminal-line .prompt {
-            color: var(--accent);
-        }
-
-        .terminal-line .command {
-            color: var(--primary);
-        }
-
-        .terminal-line .success {
-            color: #00ff88;
-        }
-
-        .terminal-cursor {
-            display: inline-block;
-            width: 10px;
-            height: 18px;
-            background: var(--accent);
-            animation: blink 1s step-end infinite;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-
-        /* Features Section */
-        .features {
-            position: relative;
-            padding: 10rem 3rem;
-            z-index: 10;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 6rem;
-        }
-
-        .section-label {
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 3px;
-            color: var(--primary);
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-
-        .section-title {
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            color: var(--text-light);
-            letter-spacing: -2px;
-        }
-
-        .section-description {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        .features-grid {
-            max-width: 1600px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: rgba(10, 14, 26, 0.4);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(89, 153, 199, 0.1);
-            border-radius: 16px;
-            padding: 3rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            will-change: transform;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .feature-card::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(89, 153, 199, 0.1), transparent);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.6s ease;
-        }
-
-        .feature-card:hover::after {
-            width: 500px;
-            height: 500px;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(89, 153, 199, 0.3);
-            box-shadow: 0 30px 80px rgba(89, 153, 199, 0.2);
-        }
-
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, rgba(89, 153, 199, 0.2), rgba(89, 153, 199, 0.05));
-            border: 1px solid rgba(89, 153, 199, 0.3);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .feature-icon svg {
-            width: 32px;
-            height: 32px;
-            stroke: var(--primary);
-            fill: none;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .feature-card:hover .feature-icon {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 15px 40px rgba(89, 153, 199, 0.3);
-            background: linear-gradient(135deg, rgba(89, 153, 199, 0.3), rgba(89, 153, 199, 0.1));
-        }
-
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-light);
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .feature-card p {
-            color: var(--text-muted);
-            line-height: 1.8;
-            font-size: 0.95rem;
-        }
-
-        /* Stats Section */
-        .stats {
-            position: relative;
-            padding: 8rem 3rem;
-            z-index: 10;
-        }
-
-        .stats-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0;
-            background: rgba(10, 14, 26, 0.4);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(89, 153, 199, 0.2);
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .stat-item {
-            padding: 5rem 3rem;
-            text-align: center;
-            position: relative;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .stat-item:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 1px;
-            height: 60%;
-            background: linear-gradient(180deg, transparent, rgba(89, 153, 199, 0.2), transparent);
-        }
-
-        .stat-item:hover {
-            background: rgba(89, 153, 199, 0.05);
-        }
-
-        .stat-number {
-            font-size: 5rem;
-            font-weight: 900;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            line-height: 1;
-            letter-spacing: -2px;
-            position: relative;
-        }
-
-        .stat-number::before {
-            content: attr(data-value);
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .stat-item:hover .stat-number::before {
-            opacity: 1;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            position: relative;
-            padding: 10rem 3rem;
-            z-index: 10;
-        }
-
-        .cta-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: linear-gradient(135deg, rgba(89, 153, 199, 0.1), rgba(89, 153, 199, 0.05));
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(89, 153, 199, 0.3);
-            border-radius: 24px;
-            padding: 6rem 4rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(89, 153, 199, 0.05), transparent);
-            animation: rotateBorder 10s linear infinite;
-        }
-
-        @keyframes rotateBorder {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .cta-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-container h2 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            color: var(--text-light);
-            letter-spacing: -2px;
-        }
-
-        .cta-container p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 3rem;
-        }
-
-        /* Footer */
-        footer {
-            position: relative;
-            padding: 4rem 3rem;
-            border-top: 1px solid rgba(89, 153, 199, 0.1);
-            z-index: 10;
-        }
-
-        .footer-content {
-            max-width: 1600px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .footer-logo {
-            font-size: 1.2rem;
+        .logo {
+            font-size: 2rem;
             font-weight: 900;
-            color: var(--text-light);
+            color: #5999c7;
+            text-shadow: 
+                0 0 30px rgba(89, 153, 199, 0.8),
+                0 0 60px rgba(89, 153, 199, 0.4);
             letter-spacing: 3px;
+            animation: pulse 2s ease-in-out infinite;
+            position: relative;
+        }
+
+        .logo::after {
+            content: 'VIPOA';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: rgba(89, 153, 199, 0.2);
+            filter: blur(10px);
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0%, 100% { text-shadow: 0 0 20px rgba(89, 153, 199, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(89, 153, 199, 1); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -10px;
+            right: -10px;
+            bottom: 0;
+            background: rgba(89, 153, 199, 0.1);
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover::before {
+            opacity: 1;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #5999c7;
+            transition: width 0.3s;
+            box-shadow: 0 0 10px #5999c7;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #5999c7;
+            text-shadow: 0 0 20px rgba(89, 153, 199, 0.8);
+        }
+
+        .hero {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 10rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 7rem;
+            margin-bottom: 1rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #5999c7, #7bb3db, #9dd4f5, #7bb3db, #5999c7);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 8px;
+            animation: gradientShift 4s ease infinite, float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px rgba(89, 153, 199, 0.9));
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #5999c7;
+            margin-bottom: 3rem;
+            font-weight: bold;
+            opacity: 0.9;
+            text-shadow: 0 0 10px rgba(89, 153, 199, 0.5);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1.3rem 3rem;
+            font-size: 1.2rem;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s;
+            display: inline-block;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.4), transparent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::after {
+            width: 400px;
+            height: 400px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #5999c7, #6aabdb);
+            color: #000;
+            box-shadow: 
+                0 0 40px rgba(89, 153, 199, 0.6),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #6aabdb, #7bb3db);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 
+                0 20px 60px rgba(89, 153, 199, 1),
+                0 0 80px rgba(89, 153, 199, 0.8),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(0, 0, 0, 0.3);
+            color: #5999c7;
+            border: 3px solid #5999c7;
+            box-shadow: 
+                0 0 20px rgba(89, 153, 199, 0.3),
+                inset 0 0 20px rgba(89, 153, 199, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(89, 153, 199, 0.2);
+            color: #fff;
+            border-color: #7bb3db;
+            box-shadow: 
+                0 0 40px rgba(89, 153, 199, 0.8),
+                0 10px 40px rgba(89, 153, 199, 0.5),
+                inset 0 0 30px rgba(89, 153, 199, 0.2);
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .features {
+            max-width: 1400px;
+            margin: 6rem auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 4rem;
+            color: #5999c7;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(89, 153, 199, 0.6);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(10, 10, 10, 0.6);
+            padding: 2.5rem;
+            border: 2px solid rgba(89, 153, 199, 0.3);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(89, 153, 199, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #5999c7, transparent, #5999c7);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s;
+            border-radius: 12px;
+            filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 
+                0 30px 60px rgba(89, 153, 199, 0.5),
+                0 0 80px rgba(89, 153, 199, 0.3);
+            border-color: #6aabdb;
+        }
+
+        .feature-card:hover::after {
+            opacity: 0.5;
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #5999c7;
+            font-weight: 900;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card p {
+            color: #aaa;
+            font-weight: bold;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats {
+            max-width: 1400px;
+            margin: 6rem auto;
+            padding: 5rem 2rem;
+            text-align: center;
+            background: rgba(10, 10, 10, 0.6);
+            border: 3px solid rgba(89, 153, 199, 0.4);
+            box-shadow: 
+                0 0 60px rgba(89, 153, 199, 0.4),
+                inset 0 0 60px rgba(89, 153, 199, 0.05);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border-radius: 20px;
+        }
+
+        .stats::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(89, 153, 199, 0.1), transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .stats h2 {
+            font-size: 3.5rem;
+            margin-bottom: 4rem;
+            color: #5999c7;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(89, 153, 199, 0.6);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item {
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(89, 153, 199, 0.2), transparent);
+            border-radius: 50%;
+            transition: all 0.4s;
+            z-index: -1;
+        }
+
+        .stat-item:hover::before {
+            width: 200px;
+            height: 200px;
+        }
+
+        .stat-item:hover {
+            transform: scale(1.15) translateY(-10px);
+        }
+
+        .stat-item h3 {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            color: #5999c7;
+            font-weight: 900;
+            text-shadow: 0 0 30px rgba(89, 153, 199, 0.8);
+            animation: countGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes countGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(89, 153, 199, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(89, 153, 199, 1); }
+        }
+
+        .stat-item p {
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 3rem;
+            text-align: center;
+            margin-top: 6rem;
+            border-top: 3px solid rgba(89, 153, 199, 0.4);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 -10px 40px rgba(89, 153, 199, 0.2);
         }
 
         footer p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* Scroll Progress */
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            z-index: 1001;
-            transform-origin: left;
-            box-shadow: 0 0 10px var(--accent);
-        }
-
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-                gap: 4rem;
-            }
-
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stat-item:not(:last-child)::after {
-                display: none;
-            }
+            color: #5999c7;
+            font-weight: bold;
+            letter-spacing: 2px;
         }
 
         @media (max-width: 768px) {
-            .nav-container {
-                padding: 1.2rem 1.5rem;
+            .hero h1 {
+                font-size: 3.5rem;
             }
 
             .nav-links {
                 gap: 1.5rem;
             }
 
-            .nav-links a {
-                font-size: 0.8rem;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero,
-            .features,
-            .stats,
-            .cta-section {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
-            }
-
-            .cta-container {
-                padding: 4rem 2rem;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
+            .features h2, .stats h2 {
+                font-size: 2.5rem;
             }
         }
     </style>
 </head>
 <body>
     <canvas id="particles"></canvas>
-    <div class="noise-overlay"></div>
-    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">VIPOA</div>
+            <div class="nav-links">
+                <a href="#features">FEATURES</a>
+                <a href="#stats">STATS</a>
+                <a href="https://discord.gg/ug9kPTWK94" target="_blank">DISCORD</a>
+            </div>
+        </div>
+    </nav>
 
     <section class="hero">
-        <div class="hero-content">
-            <div class="hero-grid">
-                <div class="hero-text">
-                    <div class="hero-badge">
-                        <span>Made by SWEB / @4503</span>
-                    </div>
-                    <h1>The Future of<br><span class="highlight">Script Execution</span></h1>
-                    <p class="hero-subtitle">Experience unmatched performance with cutting-edge Level 8 execution capabilities, advanced anti-detection, and seamless compatibility.</p>
-                    <div class="cta-buttons">
-                        <a href="https://github.com/bozokongy-hash/Vipoa/raw/main/Vipoa.zip" class="btn btn-primary" download>
-                            <span>Download Now</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                            </svg>
-                        </a>
-                        <a href="https://discord.gg/ug9kPTWK94" class="btn btn-secondary" target="_blank">
-                            <span>Join Community</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="hero-visual">
-                    <div class="terminal-window">
-                        <div class="terminal-dots">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                        <div class="terminal-content">
-                            <div class="terminal-line">
-                                <span class="prompt">$</span> <span class="command">vipoa --initialize</span>
-                            </div>
-                            <div class="terminal-line">
-                                <span class="success">✓ Level 8 executor loaded</span>
-                            </div>
-                            <div class="terminal-line">
-                                <span class="success">✓ Anti-detection active</span>
-                            </div>
-                            <div class="terminal-line">
-                                <span class="success">✓ sUNC compatibility: 90%</span>
-                            </div>
-                            <div class="terminal-line">
-                                <span class="prompt">$</span> <span class="terminal-cursor"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <h1>VIPOA</h1>
+        <p>MADE BY SWEB / @4503</p>
+        <div class="cta-buttons">
+            <a href="https://github.com/bozokongy-hash/Vipoa/raw/main/Vipoa.zip" class="btn btn-primary" download>DOWNLOAD</a>
+            <a href="https://discord.gg/ug9kPTWK94" class="btn btn-secondary" target="_blank">JOIN DISCORD</a>
         </div>
     </section>
 
     <section class="features" id="features">
-        <div class="section-header">
-            <div class="section-label">Current Features</div>
-            <h2 class="section-title">Vipoa Features!</h2>
-            <p class="section-description">Every feature meticulously crafted to deliver unparalleled performance and reliability. Experience the pinnacle of script execution technology.</p>
-        </div>
-        
+        <h2>FEATURES</h2>
         <div class="features-grid">
             <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                    </svg>
-                </div>
-                <h3>Discord Key System</h3>
-                <p>Streamlined authentication through Discord. Instant key access with zero friction. Join our community and start executing in minutes.</p>
+                <h3>DISCORD KEY</h3>
+                <p>Simple key system - join our Discord server to get your key instantly</p>
             </div>
-
             <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                    </svg>
-                </div>
-                <h3>Level 8 Execution</h3>
-                <p>Unmatched power with Level 8 execution capabilities. Run the most demanding scripts with absolute precision and reliability.</p>
+                <h3>LEVEL 8 EXECUTOR</h3>
+                <p>Advanced execution level supporting 90% sUNC for maximum script compatibility</p>
             </div>
-
             <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    </svg>
-                </div>
-                <h3>Advanced Anti-Detection</h3>
-                <p>State-of-the-art protection keeps you safe. Our multi-layered security system ensures undetectable operation at all times.</p>
+                <h3>UNDETECTABLE</h3>
+                <p>State-of-the-art anti-cheat bypass keeps you under the radar</p>
             </div>
-
             <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10"/>
-                        <polyline points="12 6 12 12 16 14"/>
-                    </svg>
-                </div>
-                <h3>Instant Execution</h3>
-                <p>Lightning-fast script injection with zero delays. Experience blazing execution speeds that outperform the competition.</p>
+                <h3>AUTO-UPDATE</h3>
+                <p>Automatic updates ensure compatibility with latest Roblox versions</p>
             </div>
-
             <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-                        <linex1="12" y1="22.08" x2="12" y2="12"/>
-</svg>
-</div>
-<h3>90% sUNC Compatible</h3>
-<p>Extensive script library support with 90% sUNC compatibility. Run your favorite scripts without compatibility issues.</p>
-</div>
-        <div class="feature-card">
-            <div class="feature-icon">
-                <svg viewBox="0 0 24 24">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
+                <h3>ELITE COMMUNITY</h3>
+                <p>Join the ranks of power users in our exclusive Discord server</p>
             </div>
-            <h3>Active Community</h3>
-            <p>Join our Discord full of users. Get support, share scripts, and stay updated with the latest features.</p>
+            <div class="feature-card">
+                <h3>CLEAN UI</h3>
+                <p>Beautiful modern interface designed for efficiency and ease of use</p>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="stats" id="stats">
-    <div class="stats-container">
+    <section class="stats" id="stats">
+        <h2>CURRENT STATS</h2>
         <div class="stats-grid">
             <div class="stat-item">
-                <div class="stat-number" data-value="100+">100+</div>
-                <div class="stat-label">Active Users</div>
+                <h3>100+</h3>
+                <p>ACTIVE USERS</p>
             </div>
             <div class="stat-item">
-                <div class="stat-number" data-value="99.9%">99.9%</div>
-                <div class="stat-label">Uptime</div>
+                <h3>99%</h3>
+                <p>SATISFACTION</p>
             </div>
             <div class="stat-item">
-                <div class="stat-number" data-value="24/7">24/7</div>
-                <div class="stat-label">Support</div>
+                <h3>24/7</h3>
+                <p>SUPPORT</p>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="cta-section">
-    <div class="cta-container">
-        <div class="cta-content">
-            <h2>Ready to Get Started?</h2>
-            <p>Join our Discord full of users experiencing the future of script execution</p>
-            <div class="cta-buttons">
-                <a href="https://github.com/bozokongy-hash/Vipoa/raw/main/Vipoa.zip" class="btn btn-primary" download>
-                    <span>Download Vipoa</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
+    <footer>
+        <p>&copy; 2025 VIPOA. ALL RIGHTS RESERVED.</p>
+    </footer>
 
-<footer>
-    <div class="footer-content">
-        <div class="footer-logo">VIPOA</div>
-        <p>&copy; 2025 Vipoa. Made by SWEB / @4503. All rights reserved.</p>
-    </div>
-</footer>
-
-<script>
-    // Scroll progress - throttled for performance
-    const scrollProgress = document.getElementById('scrollProgress');
-    let ticking = false;
-    
-    function updateScrollProgress() {
-        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (window.scrollY / windowHeight) * 100;
-        scrollProgress.style.width = scrolled + '%';
-        ticking = false;
-    }
-
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            window.requestAnimationFrame(updateScrollProgress);
-            ticking = true;
-        }
-    });
-
-    // Optimized particle animation
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d', { alpha: true });
-    
-    // Set canvas size
-    function resizeCanvas() {
+    <script>
+        // Mouse interaction
+        let mouse = { x: null, y: null, radius: 150 };
+        
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        
         canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    resizeCanvas();
+        canvas.height = document.documentElement.scrollHeight;
 
-    // Reduce particle count for better performance
-    const particles = [];
-    const particleCount = Math.min(100, Math.floor(window.innerWidth / 15));
+        let particles = [];
+        const particleCount = 80;
 
-    class Particle {
-        constructor() {
-            this.reset();
-            this.y = Math.random() * canvas.height;
-        }
+        class Particle {
+            constructor(x, y, size = null) {
+                this.x = x || Math.random() * canvas.width;
+                this.y = y || Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = (Math.random() - 0.5) * 1.5;
+                this.radius = size || (Math.random() * 4 + 3);
+                this.life = 1;
+                this.maxLife = 1;
+                this.fadeOut = false;
+            }
 
-        reset() {
-            this.x = Math.random() * canvas.width;
-            this.y = 0;
-            this.vx = (Math.random() - 0.5) * 0.5;
-            this.vy = (Math.random() - 0.5) * 0.5;
-            this.size = Math.random() * 2 + 1;
-        }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
 
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
+                // Wrap around edges
+                if (this.x < -10) this.x = canvas.width + 10;
+                if (this.x > canvas.width + 10) this.x = -10;
+                if (this.y < -10) this.y = canvas.height + 10;
+                if (this.y > canvas.height + 10) this.y = -10;
 
-            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-        }
-
-        draw() {
-            ctx.fillStyle = 'rgba(89, 153, 199, 0.4)';
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-
-    // Initialize particles
-    for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
-    }
-
-    // Animation loop with performance optimization
-    let lastTime = 0;
-    const fps = 30;
-    const interval = 1000 / fps;
-
-    function animate(currentTime) {
-        requestAnimationFrame(animate);
-
-        const deltaTime = currentTime - lastTime;
-        if (deltaTime < interval) return;
-        
-        lastTime = currentTime - (deltaTime % interval);
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Update and draw particles
-        for (let i = 0; i < particles.length; i++) {
-            particles[i].update();
-            particles[i].draw();
-        }
-
-        // Draw connections - optimized with distance check
-        const maxDistance = 120;
-        const maxDistanceSquared = maxDistance * maxDistance;
-
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[j].x - particles[i].x;
-                const dy = particles[j].y - particles[i].y;
-                const distanceSquared = dx * dx + dy * dy;
-
-                if (distanceSquared < maxDistanceSquared) {
-                    const distance = Math.sqrt(distanceSquared);
-                    const opacity = 0.15 * (1 - distance / maxDistance);
-                    ctx.strokeStyle = `rgba(89, 153, 199, ${opacity})`;
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.stroke();
+                // Fade out if marked
+                if (this.fadeOut) {
+                    this.life -= 0.02;
                 }
             }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(89, 153, 199, ${this.life})`;
+                ctx.shadowBlur = 20 * this.life;
+                ctx.shadowColor = '#5999c7';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+
+            isClicked(mx, my) {
+                const dx = mx - this.x;
+                const dy = my - this.y;
+                return Math.sqrt(dx * dx + dy * dy) < this.radius + 5;
+            }
+
+            burst() {
+                const burstParticles = [];
+                const numBurst = Math.floor(Math.random() * 5) + 8; // 8-12 new particles
+                
+                for (let i = 0; i < numBurst; i++) {
+                    const angle = (Math.PI * 2 * i) / numBurst + Math.random() * 0.5;
+                    const speed = Math.random() * 3 + 2;
+                    const newParticle = new Particle(this.x, this.y, this.radius * 0.6);
+                    newParticle.vx = Math.cos(angle) * speed;
+                    newParticle.vy = Math.sin(angle) * speed;
+                    burstParticles.push(newParticle);
+                }
+                
+                return burstParticles;
+            }
         }
-    }
 
-    animate(0);
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
 
-    // Debounced resize handler
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            resizeCanvas();
-            // Redistribute particles on resize
-            particles.forEach(particle => {
-                particle.x = Math.random() * canvas.width;
-                particle.y = Math.random() * canvas.height;
-            });
-        }, 250);
-    });
-</script>
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Update and draw particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                
+                // Remove faded particles
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = document.documentElement.scrollHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('scroll', () => {
+            canvas.height = document.documentElement.scrollHeight;
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        canvas.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // Click to burst dots
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX;
+            const clickY = e.clientY;
+            
+            for (let i = particles.length - 1; i >= 0; i--) {
+                if (particles[i].isClicked(clickX, clickY)) {
+                    const burstParticles = particles[i].burst();
+                    particles[i].fadeOut = true;
+                    particles.push(...burstParticles);
+                    break; // Only burst one dot per click
+                }
+            }
+        });
+    </script>
 </body>
 </html>
-```
