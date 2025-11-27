@@ -165,28 +165,509 @@
             position: relative;
         }
 
-        .hero h1::before {
-            content: 'VIPOA';
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: linear-gradient(45deg, #5999c7, #7bb3db, #9dd4f5);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: blur(20px);
-            opacity: 0.5;
-            animation: gradientShift 4s ease infinite;
-        }
-
         @keyframes gradientShift {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
-@@ -682,37 +668,40 @@
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #5999c7;
+            margin-bottom: 3rem;
+            font-weight: bold;
+            opacity: 0.9;
+            text-shadow: 0 0 10px rgba(89, 153, 199, 0.5);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1.3rem 3rem;
+            font-size: 1.2rem;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s;
+            display: inline-block;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.4), transparent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::after {
+            width: 400px;
+            height: 400px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #5999c7, #6aabdb);
+            color: #000;
+            box-shadow: 
+                0 0 40px rgba(89, 153, 199, 0.6),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #6aabdb, #7bb3db);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 
+                0 20px 60px rgba(89, 153, 199, 1),
+                0 0 80px rgba(89, 153, 199, 0.8),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(0, 0, 0, 0.3);
+            color: #5999c7;
+            border: 3px solid #5999c7;
+            box-shadow: 
+                0 0 20px rgba(89, 153, 199, 0.3),
+                inset 0 0 20px rgba(89, 153, 199, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(89, 153, 199, 0.2);
+            color: #fff;
+            border-color: #7bb3db;
+            box-shadow: 
+                0 0 40px rgba(89, 153, 199, 0.8),
+                0 10px 40px rgba(89, 153, 199, 0.5),
+                inset 0 0 30px rgba(89, 153, 199, 0.2);
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .features {
+            max-width: 1400px;
+            margin: 6rem auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 4rem;
+            color: #5999c7;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(89, 153, 199, 0.6);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(10, 10, 10, 0.6);
+            padding: 2.5rem;
+            border: 2px solid rgba(89, 153, 199, 0.3);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(89, 153, 199, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #5999c7, transparent, #5999c7);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s;
+            border-radius: 12px;
+            filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 
+                0 30px 60px rgba(89, 153, 199, 0.5),
+                0 0 80px rgba(89, 153, 199, 0.3);
+            border-color: #6aabdb;
+        }
+
+        .feature-card:hover::after {
+            opacity: 0.5;
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #5999c7;
+            font-weight: 900;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card p {
+            color: #aaa;
+            font-weight: bold;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats {
+            max-width: 1400px;
+            margin: 6rem auto;
+            padding: 5rem 2rem;
+            text-align: center;
+            background: rgba(10, 10, 10, 0.6);
+            border: 3px solid rgba(89, 153, 199, 0.4);
+            box-shadow: 
+                0 0 60px rgba(89, 153, 199, 0.4),
+                inset 0 0 60px rgba(89, 153, 199, 0.05);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border-radius: 20px;
+        }
+
+        .stats::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(89, 153, 199, 0.1), transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .stats h2 {
+            font-size: 3.5rem;
+            margin-bottom: 4rem;
+            color: #5999c7;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(89, 153, 199, 0.6);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item {
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(89, 153, 199, 0.2), transparent);
+            border-radius: 50%;
+            transition: all 0.4s;
+            z-index: -1;
+        }
+
+        .stat-item:hover::before {
+            width: 200px;
+            height: 200px;
+        }
+
+        .stat-item:hover {
+            transform: scale(1.15) translateY(-10px);
+        }
+
+        .stat-item h3 {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            color: #5999c7;
+            font-weight: 900;
+            text-shadow: 0 0 30px rgba(89, 153, 199, 0.8);
+            animation: countGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes countGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(89, 153, 199, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(89, 153, 199, 1); }
+        }
+
+        .stat-item p {
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 3rem;
+            text-align: center;
+            margin-top: 6rem;
+            border-top: 3px solid rgba(89, 153, 199, 0.4);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 -10px 40px rgba(89, 153, 199, 0.2);
+        }
+
+        footer p {
+            color: #5999c7;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .features h2, .stats h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles"></canvas>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">VIPOA</div>
+            <div class="nav-links">
+                <a href="#features">FEATURES</a>
+                <a href="#stats">STATS</a>
+                <a href="https://discord.gg/ug9kPTWK94" target="_blank">DISCORD</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>VIPOA</h1>
+        <p>MADE BY SWEB / @4503</p>
+        <div class="cta-buttons">
+            <a href="https://github.com/bozokongy-hash/Vipoa/raw/main/Vipoa.zip" class="btn btn-primary" download>DOWNLOAD</a>
+            <a href="https://discord.gg/ug9kPTWK94" class="btn btn-secondary" target="_blank">JOIN DISCORD</a>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2>FEATURES</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>DISCORD KEY</h3>
+                <p>Simple key system - join our Discord server to get your key instantly</p>
+            </div>
+            <div class="feature-card">
+                <h3>LEVEL 8 EXECUTOR</h3>
+                <p>Advanced execution level supporting 90% sUNC for maximum script compatibility</p>
+            </div>
+            <div class="feature-card">
+                <h3>UNDETECTABLE</h3>
+                <p>State-of-the-art anti-cheat bypass keeps you under the radar</p>
+            </div>
+            <div class="feature-card">
+                <h3>AUTO-UPDATE</h3>
+                <p>Automatic updates ensure compatibility with latest Roblox versions</p>
+            </div>
+            <div class="feature-card">
+                <h3>ELITE COMMUNITY</h3>
+                <p>Join the ranks of power users in our exclusive Discord server</p>
+            </div>
+            <div class="feature-card">
+                <h3>CLEAN UI</h3>
+                <p>Beautiful modern interface designed for efficiency and ease of use</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats" id="stats">
+        <h2>CURRENT STATS</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>100+</h3>
+                <p>ACTIVE USERS</p>
+            </div>
+            <div class="stat-item">
+                <h3>99%</h3>
+                <p>SATISFACTION</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>SUPPORT</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 VIPOA. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <script>
+        // Mouse interaction
+        let mouse = { x: null, y: null, radius: 150 };
+        
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = document.documentElement.scrollHeight;
+
+        let particles = [];
+        const particleCount = 80;
+
+        class Particle {
+            constructor(x, y, size = null) {
+                this.x = x || Math.random() * canvas.width;
+                this.y = y || Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = (Math.random() - 0.5) * 1.5;
+                this.radius = size || (Math.random() * 4 + 3);
+                this.life = 1;
+                this.maxLife = 1;
+                this.fadeOut = false;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Wrap around edges
+                if (this.x < -10) this.x = canvas.width + 10;
+                if (this.x > canvas.width + 10) this.x = -10;
+                if (this.y < -10) this.y = canvas.height + 10;
+                if (this.y > canvas.height + 10) this.y = -10;
+
+                // Fade out if marked
+                if (this.fadeOut) {
+                    this.life -= 0.02;
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(89, 153, 199, ${this.life})`;
+                ctx.shadowBlur = 20 * this.life;
+                ctx.shadowColor = '#5999c7';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+
+            isClicked(mx, my) {
+                const dx = mx - this.x;
+                const dy = my - this.y;
+                return Math.sqrt(dx * dx + dy * dy) < this.radius + 5;
+            }
+
+            burst() {
+                const burstParticles = [];
+                const numBurst = Math.floor(Math.random() * 5) + 8; // 8-12 new particles
+                
+                for (let i = 0; i < numBurst; i++) {
+                    const angle = (Math.PI * 2 * i) / numBurst + Math.random() * 0.5;
+                    const speed = Math.random() * 3 + 2;
+                    const newParticle = new Particle(this.x, this.y, this.radius * 0.6);
+                    newParticle.vx = Math.cos(angle) * speed;
+                    newParticle.vy = Math.sin(angle) * speed;
+                    burstParticles.push(newParticle);
+                }
+                
+                return burstParticles;
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Update and draw particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                
+                // Remove faded particles
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
             canvas.height = document.documentElement.scrollHeight;
         }
 
@@ -211,7 +692,7 @@
             const rect = canvas.getBoundingClientRect();
             const clickX = e.clientX;
             const clickY = e.clientY;
-
+            
             for (let i = particles.length - 1; i >= 0; i--) {
                 if (particles[i].isClicked(clickX, clickY)) {
                     const burstParticles = particles[i].burst();
