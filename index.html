@@ -920,67 +920,11 @@
             font-size: 1.05rem;
         }
 
-        /* Footer */
-        footer {
-            padding: 5rem 5% 3rem;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            z-index: 2;
-background: rgba(0, 0, 0, 0.5);
-}
-    .footer-content {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .footer-links {
-        display: flex;
-        justify-content: center;
-        gap: 3rem;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
-    }
-
-    .footer-links a {
-        color: #666;
-        text-decoration: none;
-        transition: all 0.3s;
-        font-weight: 600;
-        position: relative;
-    }
-
-    .footer-links a::after {
-        content: '';
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background: var(--primary);
-        transition: width 0.3s;
-    }
-
-    .footer-links a:hover {
-        color: var(--primary);
-    }
-
-    .footer-links a:hover::after {
-        width: 100%;
-    }
-
-    .footer-credit {
-        color: #666;
-        font-size: 1rem;
-        margin-top: 1rem;
-    }
-
-    /* Scroll reveal */
-    .reveal {
-        opacity: 0;
-        transform: translateY(50px);
-        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);    }
 
     .reveal.active {
         opacity: 1;
@@ -1411,18 +1355,6 @@ background: rgba(0, 0, 0, 0.5);
             </div>
         </div>
     </section>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="https://discord.gg/ug9kPTWK94" target="_blank">Discord</a>
-                <a href="https://github.com/bozokongy-hash/Vipoa" target="_blank">GitHub</a>
-                <a href="#features">Features</a>
-                <a href="#download">Download</a>
-            </div>
-            <p class="footer-credit">Created by Sweb / @4503 • © 2025 Vipoa</p>
-        </div>
-    </footer>
 </div>
 
 <script>
